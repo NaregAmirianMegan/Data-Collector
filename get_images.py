@@ -2,6 +2,11 @@ from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen, urlretrieve
 import os
 
+def reformat(str):
+    str = str.rstrip()
+    stringList = (str.split(" "))
+    return ("+").join(stringList)
+
 def soupify(url):
     req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     html = urlopen(req).read()
@@ -24,14 +29,16 @@ def getImages(url, userInput):
             f = open(newDir+'/pic'+str(num)+'.jpg','wb')
             f.write(urlopen(each).read())
             f.close()
-        return image_links
+        print("Done")
     else:
-        print("Okay finished")
+        print("Okay Done")
         return
 
 userInput = input("Image to collect: ")
-searchUrl = "https://www.google.com/search?q="+userInput+"&source=lnms&tbm=isch&sa=X&ved=0ahUKEwj50ti0zZ7ZAhWL6YMKHdt8B0UQ_AUICigB&biw=1536&bih=735"
+uInput = reformat(userInput)
+
+searchUrl = "https://www.google.com/search?q="+uInput+"&source=lnms&tbm=isch&sa=X&ved=0ahUKEwj50ti0zZ7ZAhWL6YMKHdt8B0UQ_AUICigB&biw=1536&bih=735"
 
 print("Collecting images of "+userInput+"\nAt: "+searchUrl)
 
-getImages(searchUrl, userInput)
+getImages(searchUrl, uInput)
