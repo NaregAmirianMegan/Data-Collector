@@ -1,8 +1,13 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.support import expected_conditions as expected
+from selenium.webdriver.support.wait import WebDriverWait
 from urllib.request import urlopen
 import os, time
 
-timeLag = 0.5 #Lag time to load full source code
+TIMELAG = 1 #Lag time to load full source code
 preUrl = "https://www.google.com/search?q="
 postUrl = "&source=lnms&tbm=isch&sa=X&ved=0ahUKEwj50ti0zZ7ZAhWL6YMKHdt8B0UQ_AUICigB&biw=1536&bih=735"
 continueCollecting = ""
@@ -13,27 +18,35 @@ def reformat(str):
     stringList = (str.split(" "))
     return ("+").join(stringList)
 
-#TODO: stop chrome from openning
-
 def getImages(url, userInput, imageQuota):
-    #Setup Chrome environment
-    driver = webdriver.Chrome()
+    #Setup Firefox environment (change Firefox to chrome driver if you prefer chrome)
+    options = Options()
+    options.add_argument('-headless')
+    driver = webdriver.Firefox(executable_path='geckodriver', firefox_options=options)
+
+    #Get Google Images url with Selenium
     driver.get(url)
     print("Loading images from Google Images . . .")
-    pageStatusIndex = 0 
+    pageStatusIndex = 0
 
     #Get full page source to collect images
     while not(driver.find_element_by_id("smb").is_displayed()):
         driver.execute_script("window.scrollTo(0, "+str(pageStatusIndex*1000)+");")
-        time.sleep(timeLag)
+        time.sleep(TIMELAG)
         pageStatusIndex = pageStatusIndex + 1
 
     driver.find_element_by_id("smb").click()
 
-    while(pageStatusIndex < 50): #TODO: stop when at end of page
-        driver.execute_script("window.scrollTo(0, "+str(pageStatusIndex*1000)+");")
-        time.sleep(timeLag)
+    last_height = driver.execute_script("return document.body.scrollHeight")
+
+    while True: 
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(TIMELAG)
         pageStatusIndex = pageStatusIndex + 1
+        new_height = driver.execute_script("return document.body.scrollHeight")
+        if new_height == last_height:
+            break
+        last_height = new_height
 
     #Setup new directory name and locate images from source code
     newDir = './'+userInput
