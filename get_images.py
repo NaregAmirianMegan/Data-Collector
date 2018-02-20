@@ -1,18 +1,27 @@
+"""
+@author: Nareg A. Megan
+@title: get_images.py
+@purpose: download images of a certain type from Google Images
+@bugs: only downloads first 20 images because there is no autoscrolling
+"""
+
 from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen, urlretrieve
 import os
 
+#Replace spaces with pluses to fit URL syntax
 def reformat(str):
     str = str.rstrip()
     stringList = (str.split(" "))
     return ("+").join(stringList)
 
+#Convert request url to html soup
 def soupify(url):
     req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     html = urlopen(req).read()
     return BeautifulSoup(html, "lxml")
 
-
+#Search for image source URL's and download images
 def getImages(url, userInput):
     newDir = './'+userInput
     os.makedirs(newDir)

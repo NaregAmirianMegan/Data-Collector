@@ -1,3 +1,10 @@
+"""
+@author: Nareg A. Megan
+@title: get_images_selenium.py
+@purpose: Download images off of Google Images
+@bugs: Sometimes won't read in all of image source URL's 
+"""
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -39,7 +46,7 @@ def getImages(url, userInput, imageQuota):
 
     last_height = driver.execute_script("return document.body.scrollHeight")
 
-    while True: 
+    while True:
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(TIMELAG)
         pageStatusIndex = pageStatusIndex + 1
