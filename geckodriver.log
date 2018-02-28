@@ -188,3 +188,10 @@ Unable to read VR Path Registry from C:\Users\Nareg\AppData\Local\openvr\openvrp
 1519148042125	Marionette	INFO	Enabled via --marionette
 1519148048198	Marionette	INFO	Listening on port 52582
 1519148048377	Marionette	WARN	TLS certificate errors will be ignored for this session
+1519158179202	geckodriver	INFO	geckodriver 0.19.1
+1519158179217	geckodriver	INFO	Listening on 127.0.0.1:54569
+1519158182288	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-headless" "-profile" "C:\\Users\\Nareg\\AppData\\Local\\Temp\\rust_mozprofile.bo2nfHA9UN4v"
+*** You are running in headless mode.
+1519158183834	Marionette	INFO	Enabled via --marionette
+1519158187678	Marionette	INFO	Listening on port 54578
+1519158188342	Marionette	WARN	TLS certificate errors will be ignored for this session
